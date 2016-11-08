@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 
 public class FXMLController implements Initializable {
     
-    Stage monStage;
+    Stage monStage; //stage de la fenêtre principale
+    Database db; //objet base de données
+    
+    final String VIDE="";
     
     @FXML
     private TitledPane MenuPatients;
@@ -57,16 +60,17 @@ public class FXMLController implements Initializable {
     /**
      * Transfert du stage principal...
      * @param stage 
+     * @param db 
      */
-    public void setStage(Stage stage){
+    public void setStage(Stage stage, Database db){
         monStage=stage;
+        this.db=db;
     }
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        init_components();
-        init_database();
+        init_components(); //mettre dans un etat X les composants
     }  
 
     /** 
@@ -101,20 +105,29 @@ public class FXMLController implements Initializable {
     private void hMnModifierPatient(ActionEvent event) {
     }
 
+    /**
+     * Initialise les composant du Stage principal au démarrage
+     */
     private void init_components() {
         //ouvrir par défaut le menu patient au démarrage...
         MenuPatients.setExpanded(true);
+        lbADRESSE1PATIENT.setText(VIDE);
+        lbADRESSE2PATIENT.setText(VIDE);
+        lbDATECREATION.setText(VIDE);
+        lbDDNPATIENT.setText(VIDE);
+        lbIDPATIENT.setText(VIDE);
+        lbNOMPATIENT.setText(VIDE);
+        lbPROFESSIONPATIENT.setText(VIDE);
+        lbTELEMAILPATIENT.setText(VIDE);
     }
 
-    private void init_database() {
-        try {
-            //connecter la base de données
-            Database db=new Database("/home/herve/dev/jNaturos/Naturos", "herve", "herve",null,0,true,false);
-            //Database db=new Database("/home/herve/dev/HTTEST", "herve", "herve","localhost",0,false,false);
-            
-            if (db.connect()) {System.out.println("Naturos est connectée");} else {System.out.println("Naturos n'est pas connectée!");System.exit(0x01);}
     
-            db.setSchema("APP");
+    /**
+     * Tester l'accés à la base de données [A SUPPRIMER]
+     */
+    private void test_database() {
+        try {
+           
             System.out.println("Schema:"+db.schema());
             System.out.println("Catalogue:"+db.catalog());
             System.out.println(db.infoClients());
@@ -127,8 +140,6 @@ public class FXMLController implements Initializable {
                 System.out.println(db.getDB().getString(2)+" "+db.getDB().getString(3));  
             }
             
-            db.close();
-            db.disconnect();
             
         } catch (SQLException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);

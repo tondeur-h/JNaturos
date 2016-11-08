@@ -19,6 +19,9 @@ public class MainApp extends Application {
     //constantes
     final String VERSION="JNaturos version 0.1 ";
     
+    //variables
+    Database db;
+    
     @Override
     public void start(Stage stage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
@@ -26,8 +29,6 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainScene.fxml"));
         Parent root = (Parent)loader.load();
         final FXMLController controller = loader.getController();
-        controller.setStage(stage);
-        
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
@@ -55,13 +56,19 @@ public class MainApp extends Application {
         );
         //======================================================================
         
+        runDatabase();
+        controller.setStage(stage,db);
+        
         stage.setScene(scene);
         stage.show();
     }
 
     @Override
     public void stop() throws Exception {
-    
+     //fermer la base de données
+     db.close();
+     db.disconnect();
+        System.out.println("Naturos est deconnectée");   
     super.stop();
     }
     
@@ -75,6 +82,16 @@ public class MainApp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void runDatabase() {
+         //connecter la base de données
+            db=new Database("/home/herve/dev/jNaturos/Naturos", "herve", "herve",null,0,true,false);
+            //Database db=new Database("/home/herve/dev/HTTEST", "herve", "herve","localhost",0,false,false);
+            
+            if (db.connect()) {System.out.println("Naturos est connectée");} else {System.out.println("Naturos n'est pas connectée!");Platform.exit();}
+    
+            db.setSchema("APP");
     }
 
 }
