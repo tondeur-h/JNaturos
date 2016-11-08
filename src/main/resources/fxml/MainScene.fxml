@@ -85,7 +85,7 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbDDNPATIENT" prefHeight="16.0" prefWidth="253.0" text="12/01/1971 (45 ans)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Label fx:id="lbDDNPATIENT" prefHeight="16.0" prefWidth="253.0" text="12/11/1931 (85 ans)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <Label prefHeight="16.0" prefWidth="162.0" text="NUMERO :" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -97,14 +97,14 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbADRESSE1PATIENT" prefHeight="84.0" prefWidth="407.0" text="1120 Chemin Stratégique 59680 Ferrieres La Grande" GridPane.columnIndex="5" />
+            <Label fx:id="lbADRESSE1PATIENT" prefHeight="84.0" prefWidth="407.0" text="1120 Chemin des Vaches 59000 Lille" GridPane.columnIndex="5" />
             <Label fx:id="lbADRESSE2PATIENT" prefHeight="16.0" prefWidth="436.0" text="Adresse personelle" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label prefHeight="16.0" prefWidth="208.0" text="TEL/EMAIL :" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="lbTELEMAILPATIENT" prefHeight="16.0" prefWidth="432.0" text="0695807044 / tondeur.herve@yahoo.fr" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label fx:id="lbTELEMAILPATIENT" prefHeight="16.0" prefWidth="432.0" text="0607080910 / tondeurh@monmail.fr" GridPane.columnIndex="5" GridPane.rowIndex="2" />
             <Label prefHeight="16.0" prefWidth="195.0" text="PROFESSION :" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="19.0" />
