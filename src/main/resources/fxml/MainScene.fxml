@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image:@../img/Naturopathie.jpg;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.htdev.jnaturos.FXMLController">
+    <children>
+        <Button fx:id="btnQuitter" layoutX="462.0" layoutY="368.0" onAction="#handleBtnQuitter" prefHeight="26.0" prefWidth="97.0" text="Quitter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <Accordion layoutY="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <panes>
+          <TitledPane fx:id="MenuPatients" text="Patients">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="7.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Hyperlink fx:id="MnREcherchePatient" alignment="CENTER" onAction="#hMnRecherchePatient" prefHeight="24.0" prefWidth="210.0" text="Rechercher un Patient" underline="true" />
+                              <Hyperlink fx:id="mnNouveauPatient" alignment="CENTER" onAction="#hMnNouveauPatient" prefHeight="24.0" prefWidth="190.0" text="Nouveau Patient" underline="true" />
+                              <Hyperlink fx:id="mnModifierPatient" alignment="CENTER" onAction="#hMnModifierPatient" prefHeight="24.0" prefWidth="201.0" text="Modifier Patient..." underline="true" />
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="MenuVisites" disable="true" expanded="false" text="Visites">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="MenuBilanVital" disable="true" expanded="false" text="Bilan Vital">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Accordion>
+      <ImageView fitHeight="690.0" fitWidth="1040.0" layoutX="203.0" layoutY="83.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="37.7054443359375">
+         <image>
+            <Image url="@../img/Naturopathie.jpg" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="201.0" layoutY="128.0" prefHeight="80.0" prefWidth="522.0" style="-fx-background-color: #CCCCCC;" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.66665649414062" minWidth="10.0" prefWidth="146.66665649414062" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="78.33334350585938" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="77.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="165.6666259765625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.3333740234375" minWidth="10.0" prefWidth="165.6666259765625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.3333740234375" minWidth="10.0" prefWidth="406.3333740234375" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <effect>
+            <DropShadow radius="4.75" width="0.0" />
+         </effect>
+         <children>
+            <Label prefHeight="24.0" prefWidth="156.0" text="PATIENT :">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNOMPATIENT" prefHeight="16.0" prefWidth="476.0" text="TONDEUR, HERVE (M)" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+            <Label prefHeight="24.0" prefWidth="157.0" text="DDN :" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbDDNPATIENT" prefHeight="16.0" prefWidth="253.0" text="12/01/1971 (45 ans)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Label prefHeight="16.0" prefWidth="162.0" text="NUMERO :" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbIDPATIENT" prefHeight="16.0" prefWidth="248.0" text="123456" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Label prefHeight="16.0" prefWidth="183.0" text="ADRESSE :" GridPane.columnIndex="4">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbADRESSE1PATIENT" prefHeight="84.0" prefWidth="407.0" text="1120 Chemin Stratégique 59680 Ferrieres La Grande" GridPane.columnIndex="5" />
+            <Label fx:id="lbADRESSE2PATIENT" prefHeight="16.0" prefWidth="436.0" text="Adresse personelle" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label prefHeight="16.0" prefWidth="208.0" text="TEL/EMAIL :" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTELEMAILPATIENT" prefHeight="16.0" prefWidth="432.0" text="0695807044 / tondeur.herve@yahoo.fr" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label prefHeight="16.0" prefWidth="195.0" text="PROFESSION :" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbPROFESSIONPATIENT" prefHeight="16.0" prefWidth="536.0" text="Informaticien" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label prefHeight="16.0" prefWidth="151.0" text="1ere VENUE :" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbDATECREATION" prefHeight="16.0" prefWidth="383.0" text="02/11/2016 10:12" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+    </children>
+</AnchorPane>

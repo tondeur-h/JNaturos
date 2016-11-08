@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Tue Nov 08 21:55:22 CET 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-0158-45b9-4fa8-000002c82548 
+on database directory /home/herve/dev/jNaturos/Naturos with class loader sun.misc.Launcher$AppClassLoader@42a57993 
+Loaded from file:/home/herve/dev/jNaturos/target/jNaturos-1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_112-b15
+user.dir=/home/herve/dev/jNaturos
+os.name=Linux
+os.arch=amd64
+os.version=3.16.0-4-amd64
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Nov 08 21:55:22 CET 2016: Shutting down Derby engine
+----------------------------------------------------------------
+Tue Nov 08 21:55:23 CET 2016:
+Shutting down instance a816c00e-0158-45b9-4fa8-000002c82548 on database directory /home/herve/dev/jNaturos/Naturos with class loader sun.misc.Launcher$AppClassLoader@42a57993 
+----------------------------------------------------------------
