@@ -2,6 +2,8 @@ package com.htdev.jnaturos;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,10 +22,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class FXMLController implements Initializable {
-    
+    //variables globales 
     Stage monStage; //stage de la fenêtre principale
     Database db; //objet base de données
+    List<Hyperlink> liens= new ArrayList<>(); //liste des patients récents...
+    Patient patientCourant=null;
+    String visiteCourante="-1";
     
+    
+    //constantes
     final String VIDE="";
     
     @FXML
@@ -62,6 +69,28 @@ public class FXMLController implements Initializable {
     private VBox vbPatients;
     
   
+    
+    /**
+     * Ajout d'hyperLink dans la liste des patients récents...
+     * @param text
+     * @param text0 
+     */ 
+    private void addHLPatients(String text, String num) {
+        
+       Hyperlink tmp=new Hyperlink(num+"-"+text);
+       liens.add(tmp); //ajouter l'hyperlink à l'arrayList
+       vbPatients.getChildren().add(tmp); //ajouter l'hyperlink à la Vbox
+       liens.stream().forEach((hyperlink) -> { //et creer le lien vers ce patient
+           hyperlink.setOnAction((ActionEvent t) -> {
+               //récuperer le numéro du patient...
+               //ouvrir la base de données sur les data du patient...     
+               //afficher les données sur le bandeau patient...
+               charge_et_affiche_patient(hyperlink.getText().substring(0,hyperlink.getText().indexOf('-')));
+           });
+        });     
+    }
+    
+    
     /**
      * Transfert du stage principal...
      * @param stage 
@@ -72,12 +101,17 @@ public class FXMLController implements Initializable {
         this.db=db;
     }
     
-    
+    /**
+     * Initialisation du controleur au démarrage
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         init_components(); //mettre dans un etat X les composants
     }  
 
+    
     /** 
      * Quitter la fenêtre principale...
      * @param event 
@@ -94,7 +128,7 @@ public class FXMLController implements Initializable {
                 // ... appel de OK on fait rien et on ferme l'application
                 Platform.exit();
             } else {
-                // ... appel de CANCEL on consomme l'evenement pour l'annuler
+                // ... appel de CANCEL on ne fait rien
             }
     }
 
@@ -110,6 +144,7 @@ public class FXMLController implements Initializable {
     private void hMnModifierPatient(ActionEvent event) {
     }
 
+    
     /**
      * Initialise les composant du Stage principal au démarrage
      */
@@ -124,15 +159,67 @@ public class FXMLController implements Initializable {
         lbNOMPATIENT.setText(VIDE);
         lbPROFESSIONPATIENT.setText(VIDE);
         lbTELEMAILPATIENT.setText(VIDE);
+        //creer un objet patient courant
+        patientCourant=new Patient();
         
-       
-        
+        //ajout d'un patient fitif 
+        //DELETE
+        addHLPatients("Tondeur Hervé", "1");
     }
 
+    /**
+     * Charger le patient dont le numero est passé en paramétres
+     * @param numero 
+     */
+    private void charge_et_affiche_patient(String numero){
+        try {
+            System.out.println("select * from patient where id="+numero.trim());
+            db.query("select * from patient where id="+numero.trim());
+            while (db.getDB().next()){
+                patientCourant.setID(db.getDB().getInt("ID"));
+                patientCourant.setNOM(db.getDB().getString("NOM"));
+                patientCourant.setNOMMAR(db.getDB().getString("NOMMAR"));
+                patientCourant.setPRENOM(db.getDB().getString("PRENOM"));
+                patientCourant.setDDN(db.getDB().getDate("DDN"));
+                patientCourant.setSEXE(db.getDB().getString("SEXE"));
+                patientCourant.setNATIONALITE(db.getDB().getString("NATIONALITE"));
+                patientCourant.setADRESSE1(db.getDB().getString("ADRESSE1"));
+                patientCourant.setADRESSE2(db.getDB().getString("ADRESSE2"));
+                patientCourant.setCP(db.getDB().getString("CP"));
+                patientCourant.setVILLE(db.getDB().getString("VILLE"));
+                patientCourant.setTEL1(db.getDB().getString("TEL1"));
+                patientCourant.setTEL2(db.getDB().getString("TEL2"));
+                patientCourant.setEMAIL1(db.getDB().getString("EMAIL1"));
+                patientCourant.setEMAIL2(db.getDB().getString("EMAIL2"));
+                patientCourant.setNUMSS(db.getDB().getString("NUMSS"));
+                patientCourant.setNOMCAISSE(db.getDB().getString("NOMCAISSE"));
+                patientCourant.setPROFESSION(db.getDB().getString("PROFESSION"));
+                patientCourant.setCOMMENTAIRES(db.getDB().getString("COMMENTAIRES"));
+                patientCourant.setDATECREATION(db.getDB().getTimestamp("DATECREATION"));
+                patientCourant.setREPERTOIRE(db.getDB().getInt("REPERTOIRE"));
+            } 
+            
+            lbIDPATIENT.setText(""+patientCourant.getID());
+            lbNOMPATIENT.setText(patientCourant.getNOM()+" "+patientCourant.getNOMMAR()+","+patientCourant.getPRENOM()+"("+patientCourant.getSEXE()+")");
+            lbPROFESSIONPATIENT.setText(patientCourant.getPROFESSION());
+            lbADRESSE1PATIENT.setText(patientCourant.getADRESSE1()+" "+patientCourant.getCP()+" "+patientCourant.getVILLE());
+            lbADRESSE2PATIENT.setText(patientCourant.getADRESSE2());
+            lbDATECREATION.setText(patientCourant.getDATECREATION().toString());
+            lbDDNPATIENT.setText(patientCourant.getDDN().toString());
+            lbTELEMAILPATIENT.setText(patientCourant.getTEL1()+"/"+patientCourant.getEMAIL1());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
     
     /**
      * Tester l'accés à la base de données [A SUPPRIMER]
      */
+    //DELETE
     private void test_database() {
         try {
            

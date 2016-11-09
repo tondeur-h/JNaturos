@@ -95,7 +95,7 @@
                </font>
             </Label>
             <Label fx:id="lbDDNPATIENT" prefHeight="16.0" prefWidth="253.0" text="12/11/1931 (85 ans)" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Label prefHeight="16.0" prefWidth="162.0" text="NUMERO :" GridPane.rowIndex="3">
+            <Label prefHeight="16.0" prefWidth="162.0" text="IPP :" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
