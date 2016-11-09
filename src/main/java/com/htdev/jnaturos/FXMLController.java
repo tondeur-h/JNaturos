@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class FXMLController implements Initializable {
@@ -55,6 +56,10 @@ public class FXMLController implements Initializable {
     private Hyperlink mnNouveauPatient;
     @FXML
     private Hyperlink mnModifierPatient;
+    @FXML
+    private Label label;
+    @FXML
+    private VBox vbPatients;
     
   
     /**
@@ -119,6 +124,9 @@ public class FXMLController implements Initializable {
         lbNOMPATIENT.setText(VIDE);
         lbPROFESSIONPATIENT.setText(VIDE);
         lbTELEMAILPATIENT.setText(VIDE);
+        
+       
+        
     }
 
     

@@ -30,6 +30,15 @@
                               <Hyperlink fx:id="MnREcherchePatient" alignment="CENTER" onAction="#hMnRecherchePatient" prefHeight="24.0" prefWidth="210.0" text="Rechercher un Patient" underline="true" />
                               <Hyperlink fx:id="mnNouveauPatient" alignment="CENTER" onAction="#hMnNouveauPatient" prefHeight="24.0" prefWidth="190.0" text="Nouveau Patient" underline="true" />
                               <Hyperlink fx:id="mnModifierPatient" alignment="CENTER" onAction="#hMnModifierPatient" prefHeight="24.0" prefWidth="201.0" text="Modifier Patient..." underline="true" />
+                              <VBox fx:id="vbPatients" prefHeight="636.0" prefWidth="180.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="16.0" prefWidth="204.0" text="Patients récents" textFill="#1403f8">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </children></AnchorPane>
@@ -50,7 +59,7 @@
             <DropShadow />
          </effect>
       </Accordion>
-      <ImageView fitHeight="690.0" fitWidth="1040.0" layoutX="203.0" layoutY="83.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="37.7054443359375">
+      <ImageView fitHeight="682.0" fitWidth="1038.0" layoutX="200.693603515625" layoutY="84.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="52.0615234375">
          <image>
             <Image url="@../img/Naturopathie.jpg" />
          </image>
