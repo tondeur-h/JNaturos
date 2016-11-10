@@ -11,13 +11,15 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -36,10 +38,6 @@ public class FXMLController implements Initializable {
     @FXML
     private TitledPane MenuPatients;
     @FXML
-    private TitledPane MenuVisites;
-    @FXML
-    private TitledPane MenuBilanVital;
-    @FXML
     private Label lbNOMPATIENT;
     @FXML
     private Label lbDDNPATIENT;
@@ -56,7 +54,9 @@ public class FXMLController implements Initializable {
     @FXML
     private Label lbDATECREATION;
     @FXML
-    private Button btnQuitter;
+    private VBox vbPatients;
+    @FXML
+    private Pane paneCentral;
     @FXML
     private Hyperlink MnREcherchePatient;
     @FXML
@@ -64,9 +64,13 @@ public class FXMLController implements Initializable {
     @FXML
     private Hyperlink mnModifierPatient;
     @FXML
-    private Label label;
+    private TitledPane MenuVisites;
     @FXML
-    private VBox vbPatients;
+    private TitledPane MenuBilanVital;
+    @FXML
+    private TitledPane MenuQuitter;
+    @FXML
+    private Hyperlink mnQuitter;
     
   
     
@@ -112,39 +116,18 @@ public class FXMLController implements Initializable {
     }  
 
     
-    /** 
-     * Quitter la fenêtre principale...
-     * @param event 
-     */
-    @FXML
-    private void handleBtnQuitter(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(monStage.getTitle());
-            alert.setHeaderText("Vous avez demandé la fermeture de l'application JNaturos...");
-            alert.setContentText("Est vous sur de celà ?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                // ... appel de OK on fait rien et on ferme l'application
-                Platform.exit();
-            } else {
-                // ... appel de CANCEL on ne fait rien
-            }
-    }
 
     @FXML
-    private void hMnRecherchePatient(ActionEvent event) {
+    private void hMnRecherchePatient(ActionEvent event) throws Exception {
+        //inserer la recherche patient
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RecherchePatFXML.fxml"));
+       paneCentral.getChildren().add((Node)loader.load());
+       final RecherchePatFXMLController ctrlRP = loader.getController();
+       ctrlRP.getCaller(this, db);
+       MenuPatients.setDisable(true);
     }
 
-    @FXML
-    private void hMnNouveauPatient(ActionEvent event) {
-    }
-
-    @FXML
-    private void hMnModifierPatient(ActionEvent event) {
-    }
-
-    
+ 
     /**
      * Initialise les composant du Stage principal au démarrage
      */
@@ -213,34 +196,47 @@ public class FXMLController implements Initializable {
         }
     }
     
-    
-    
-    
-    /**
-     * Tester l'accés à la base de données [A SUPPRIMER]
+       
+    /** 
+     * Quitter la fenêtre principale...
+     * @param event 
      */
-    //DELETE
-    private void test_database() {
-        try {
-           
-            System.out.println("Schema:"+db.schema());
-            System.out.println("Catalogue:"+db.catalog());
-            System.out.println(db.infoClients());
-            System.out.println("URL:"+db.metaData().getURL());
-            System.out.println("UserName:"+db.metaData().getUserName());
-            System.out.println(db.getAllTables());
-            
-            db.query("select * from patient");
-            while (db.getDB().next()){
-                System.out.println(db.getDB().getString(2)+" "+db.getDB().getString(3));  
+    @FXML
+    private void hMnQuitter(ActionEvent event) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(monStage.getTitle());
+            alert.setHeaderText("Vous avez demandé la fermeture de l'application JNaturos...");
+            alert.setContentText("Est vous sur de celà ?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                // ... appel de OK on fait rien et on ferme l'application
+                Platform.exit();
+            } else {
+                // ... appel de CANCEL on ne fait rien
             }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    }
+
+    
+    @FXML
+    private void hMnNouveauPatient(ActionEvent event) {
+     //TODO   
+    }
+
+    @FXML
+    private void hMnModifierPatient(ActionEvent event) {
+        //TODO
     }
     
     
+    /**
+     * Fermer le panneau courant 
+     * toujours le numero 0 normalement
+     */
+    public void fermer_panel(){
+        paneCentral.getChildren().remove(0);
+        //débloquer les menu
+        MenuPatients.setDisable(false);
+    }
     
 }
