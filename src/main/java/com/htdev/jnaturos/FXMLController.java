@@ -1,5 +1,6 @@
 package com.htdev.jnaturos;
 
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -119,12 +120,14 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void hMnRecherchePatient(ActionEvent event) throws Exception {
-        //inserer la recherche patient
+       //inserer la recherche patient
        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RecherchePatFXML.fxml"));
        paneCentral.getChildren().add((Node)loader.load());
        final RecherchePatFXMLController ctrlRP = loader.getController();
        ctrlRP.getCaller(this, db);
+       //masquer les menus actifs uniquement sauf Quitter!
        MenuPatients.setDisable(true);
+       
     }
 
  
@@ -228,7 +231,7 @@ public class FXMLController implements Initializable {
         //TODO
     }
     
-    
+      
     /**
      * Fermer le panneau courant 
      * toujours le numero 0 normalement

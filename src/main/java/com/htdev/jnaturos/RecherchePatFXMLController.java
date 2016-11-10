@@ -6,6 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -19,6 +24,28 @@ public class RecherchePatFXMLController implements Initializable {
 
     FXMLController fx;
     Database db;
+    @FXML
+    private DatePicker dpDDN;
+    @FXML
+    private TextField tfNom;
+    @FXML
+    private TextField tfPrenom;
+    @FXML
+    private Button btnRecherche;
+    @FXML
+    private TableView<?> tvListePat;
+    @FXML
+    private TableColumn<?, ?> colIPP;
+    @FXML
+    private TableColumn<?, ?> colNOM;
+    @FXML
+    private TableColumn<?, ?> colNOMMAR;
+    @FXML
+    private TableColumn<?, ?> colPRENOM;
+    @FXML
+    private TableColumn<?, ?> colDDN;
+    @FXML
+    private Button btnSelectioner;
     
     /**
      * Initializes the controller class.
@@ -43,6 +70,18 @@ public class RecherchePatFXMLController implements Initializable {
     @FXML
     private void hBtnFermer(ActionEvent event) {
                 fx.fermer_panel();
+    }
+
+    @FXML
+    private void hBtnRecherche(ActionEvent event) {
+    }
+
+    @FXML
+    private void hTVPatMC(MouseEvent event) {
+    }
+
+    @FXML
+    private void hBtnSelectionner(ActionEvent event) {
     }
     
 }
