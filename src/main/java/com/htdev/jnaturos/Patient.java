@@ -35,6 +35,10 @@ public class Patient {
    private Timestamp DATECREATION;
    private int REPERTOIRE; 
 
+   public void clear(){
+       ID=-1;
+   }
+   
     public int getID() {
         return ID;
     }

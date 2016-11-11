@@ -2,6 +2,7 @@ package com.htdev.jnaturos;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,6 +47,8 @@ public class RecherchePatFXMLController implements Initializable {
     private TableColumn<?, ?> colDDN;
     @FXML
     private Button btnSelectioner;
+    
+    private ObservableList<Patient> olPatient=javafx.collections.FXCollections.observableArrayList();
     
     /**
      * Initializes the controller class.

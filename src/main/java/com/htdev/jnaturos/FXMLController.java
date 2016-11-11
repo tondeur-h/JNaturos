@@ -1,6 +1,5 @@
 package com.htdev.jnaturos;
 
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -72,6 +71,8 @@ public class FXMLController implements Initializable {
     private TitledPane MenuQuitter;
     @FXML
     private Hyperlink mnQuitter;
+    @FXML
+    private Hyperlink mnFermerPatient;
     
   
     
@@ -105,6 +106,7 @@ public class FXMLController implements Initializable {
         monStage=stage;
         this.db=db;
     }
+
     
     /**
      * Initialisation du controleur au démarrage
@@ -117,7 +119,11 @@ public class FXMLController implements Initializable {
     }  
 
     
-
+    /**
+     * Lancer le dialogue de recherche d'un patient.
+     * @param event
+     * @throws Exception 
+     */
     @FXML
     private void hMnRecherchePatient(ActionEvent event) throws Exception {
        //inserer la recherche patient
@@ -153,6 +159,7 @@ public class FXMLController implements Initializable {
         addHLPatients("Tondeur Hervé", "1");
     }
 
+    
     /**
      * Charger le patient dont le numero est passé en paramétres
      * @param numero 
@@ -240,6 +247,28 @@ public class FXMLController implements Initializable {
         paneCentral.getChildren().remove(0);
         //débloquer les menu
         MenuPatients.setDisable(false);
+    }
+
+    
+    /**
+     * Fermer le patient en cours
+     * on met -1 sur l'ID
+     * @param event 
+     */
+    @FXML
+    private void hMnFermerPatient(ActionEvent event) {
+      patientCourant.clear(); //met -1 sur ID patient
+      lbADRESSE1PATIENT.setText(""); //effacer tous les champs du bandeau patient
+      lbADRESSE2PATIENT.setText("");
+      lbDATECREATION.setText("");
+      lbDDNPATIENT.setText("");
+      lbIDPATIENT.setText("");
+      lbNOMPATIENT.setText("");
+      lbPROFESSIONPATIENT.setText("");
+      lbTELEMAILPATIENT.setText("");
+      MenuVisites.setDisable(true); // réinitialiser les menus
+      MenuBilanVital.setDisable(true);
+      MenuPatients.setDisable(false);
     }
     
 }

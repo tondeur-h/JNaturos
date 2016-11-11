@@ -28,9 +28,14 @@
                               <Hyperlink fx:id="MnREcherchePatient" alignment="CENTER" onAction="#hMnRecherchePatient" prefHeight="24.0" prefWidth="210.0" text="Rechercher un Patient" underline="true" />
                               <Hyperlink fx:id="mnNouveauPatient" alignment="CENTER" onAction="#hMnNouveauPatient" prefHeight="24.0" prefWidth="190.0" text="Nouveau Patient" underline="true" />
                               <Hyperlink fx:id="mnModifierPatient" alignment="CENTER" onAction="#hMnModifierPatient" prefHeight="24.0" prefWidth="201.0" text="Modifier Patient..." underline="true" />
+                              <Hyperlink fx:id="mnFermerPatient" alignment="CENTER" onAction="#hMnFermerPatient" prefHeight="24.0" prefWidth="195.0" text="Fermer le Patient courrant" underline="true">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Hyperlink>
                               <VBox fx:id="vbPatients" prefHeight="636.0" prefWidth="180.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="16.0" prefWidth="204.0" text="Patients récents" textFill="#1403f8">
+                                    <Label alignment="CENTER" prefHeight="0.0" prefWidth="180.0" text="Patients récents" textFill="#1403f8">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
