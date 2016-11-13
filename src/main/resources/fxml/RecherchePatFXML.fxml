@@ -19,9 +19,10 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" visible="false">
                <children>
-                  <Button fx:id="btnFermer" layoutX="494.0" layoutY="333.0" mnemonicParsing="false" onAction="#hBtnFermer" prefHeight="17.0" prefWidth="90.0" text="Fermer" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                  <Label layoutX="22.4" layoutY="22.4" prefHeight="16.0" prefWidth="146.0" text="Date de Naissance :" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />
-                  <DatePicker fx:id="dpDDN" layoutX="150.0" layoutY="17.0" prefHeight="26.0" prefWidth="138.0" promptText="DDN" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="btnAnnuler" layoutX="494.0" layoutY="333.0" mnemonicParsing="false" onAction="#hBtnAnnuler" prefHeight="17.0" prefWidth="90.0" text="Annuler" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                  <Label layoutX="41.199999999999996" layoutY="42.199999999999996" prefHeight="16.0" prefWidth="110.0" text="Date de Naiss. :" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <DatePicker fx:id="dpDDN" layoutX="150.0" layoutY="17.0" prefHeight="26.0" prefWidth="138.0" promptText="DDN" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="BtnAnnulerDDN" mnemonicParsing="false" onAction="#hbtnAnnulerDDN" prefHeight="26.0" prefWidth="21.0" text="x" AnchorPane.leftAnchor="249.0" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="313.0" layoutY="32.0" text="Nom :" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="2.0" />
                   <TextField fx:id="tfNom" layoutX="352.0" layoutY="27.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="547.0" layoutY="32.0" text="Prénom :" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="2.0" />

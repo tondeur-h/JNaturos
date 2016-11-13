@@ -89,6 +89,7 @@ class PatientBean {
 //    }
 
     public void setID(String ID) {
+        if (ID==null) ID="-1";
         this.ID=ID;
     }
 
@@ -103,6 +104,7 @@ class PatientBean {
     }
 
     public void setNOM(String NOM) {
+        if (NOM==null) NOM="";
         this.NOM=NOM;
     }
 
@@ -116,6 +118,7 @@ class PatientBean {
     }
 
     public void setPRENOM(String PRENOM) {
+        if (PRENOM==null) PRENOM="";
         this.PRENOM=PRENOM;
     }
 
@@ -129,6 +132,7 @@ class PatientBean {
     }
 
     public void setNOMMAR(String NOMMAR) {
+        if (NOMMAR==null) NOMMAR="";
         this.NOMMAR=NOMMAR;
     }
 
@@ -142,6 +146,7 @@ class PatientBean {
     }
 
     public void setDDN(String DDN) {
+        if (DDN==null) DDN="";
         this.DDN=DDN;
     }
 
@@ -155,6 +160,7 @@ class PatientBean {
     }
 
     public void setSEXE(String SEXE) {
+        if (SEXE==null) SEXE="";
         this.SEXE=SEXE;
     }
 
@@ -168,6 +174,7 @@ class PatientBean {
     }
 
     public void setNATIONALITE(String NATIONALITE) {
+        if (NATIONALITE==null) NATIONALITE="";
         this.NATIONALITE=NATIONALITE;
     }
 
@@ -181,6 +188,7 @@ class PatientBean {
     }
 
     public void setADRESSE1(String ADRESSE1) {
+        if (ADRESSE1==null) ADRESSE1="";
         this.ADRESSE1=ADRESSE1;
     }
 
@@ -194,6 +202,7 @@ class PatientBean {
     }
 
     public void setADRESSE2(String ADRESSE2) {
+        if (ADRESSE2==null) ADRESSE2="";
         this.ADRESSE1=ADRESSE2;
     }
 
@@ -207,6 +216,7 @@ class PatientBean {
     }
 
     public void setCP(String CP) {
+        if (CP==null) CP="";
         this.CP=CP;
     }
 
@@ -220,6 +230,7 @@ class PatientBean {
     }
 
     public void setVILLE(String VILLE) {
+        if (VILLE==null) VILLE="";
         this.VILLE=VILLE;
     }
 
@@ -233,6 +244,7 @@ class PatientBean {
     }
 
     public void setTEL1(String TEL1) {
+        if (TEL1==null) TEL1="";
         this.TEL1=TEL1;
     }
 
@@ -246,6 +258,7 @@ class PatientBean {
     }
 
     public void setTEL2(String TEL2) {
+        if (TEL2==null) TEL2="";
         this.TEL2=TEL2;
     }
 
@@ -259,6 +272,7 @@ class PatientBean {
     }
 
     public void setEMAIL1(String EMAIL1) {
+        if (EMAIL1==null) EMAIL1="";
         this.EMAIL1=EMAIL1;
     }
 
@@ -272,6 +286,7 @@ class PatientBean {
     }
 
     public void setEMAIL2(String EMAIL2) {
+        if (EMAIL2==null) EMAIL2="";
         this.EMAIL2=EMAIL2;
     }
 
@@ -285,6 +300,7 @@ class PatientBean {
     }
 
     public void setNUMSS(String NUMSS) {
+        if (NUMSS==null) NUMSS="";
         this.NUMSS=NUMSS;
     }
 
@@ -298,6 +314,7 @@ class PatientBean {
     }
 
     public void setNOMCAISSE(String NOMCAISSE) {
+        if (NOMCAISSE==null) NOMCAISSE="";
         this.NOMCAISSE=NOMCAISSE;
     }
 
@@ -311,6 +328,7 @@ class PatientBean {
     }
 
     public void setPROFESSION(String PROFESSION) {
+        if (PROFESSION==null) PROFESSION="";
         this.PROFESSION=PROFESSION;
     }
 
@@ -324,6 +342,7 @@ class PatientBean {
     }
 
     public void setCOMMENTAIRES(String COMMENTAIRES) {
+        if (COMMENTAIRES==null) COMMENTAIRES="";
         this.COMMENTAIRES=COMMENTAIRES;
     }
 
@@ -337,6 +356,7 @@ class PatientBean {
     }
 
     public void setDATECREATION(String DATECREATION) {
+        if (DATECREATION==null) DATECREATION="";
         this.DATECREATION=DATECREATION;
     }
 
@@ -350,6 +370,7 @@ class PatientBean {
     }
 
     public void setREPERTOIRE(String REPERTOIRE) {
+        if (REPERTOIRE==null) REPERTOIRE="";
         this.REPERTOIRE=REPERTOIRE;
     }
    

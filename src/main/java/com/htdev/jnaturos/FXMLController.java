@@ -3,7 +3,9 @@ package com.htdev.jnaturos;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,9 +32,14 @@ public class FXMLController implements Initializable {
     List<Hyperlink> liens= new ArrayList<>(); //liste des patients récents...
     PatientBean patientCourant=null;
     String visiteCourante="-1";
+    HashMap<TitledPane,Boolean > menuStatut;
+    HashMap<String, String> patientFast; //liste d'accés rapide aux patients
+    
     
     //controleur des dialogues
     RecherchePatFXMLController ctrlRP=null; //controleur dialogue recherche patient
+    NouveauPatFXMLController ctrlNP=null; //controleur dialogue nouveau patient
+    
     
     //constantes
     final String VIDE="";
@@ -80,14 +87,30 @@ public class FXMLController implements Initializable {
     
     /**
      * Ajout d'hyperLink dans la liste des patients récents...
-     * @param text
+     * @param nom
      * @param text0 
      */ 
-    private void addHLPatients(String text, String num) {
-        
-       Hyperlink tmp=new Hyperlink(num+"-"+text);
+    private void ajouter_Patients_Rapide(String nom, String num) {
+       //rechercher si le patient est deja présent...
+       boolean patientPresent=false;
+        for (Map.Entry<String, String> entry : patientFast.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();            
+            if (key.compareTo(num)==0 && value.compareTo(nom)==0) patientPresent=true;
+        }
+       
+       //si oui sortir et ne rien faire
+       if (!patientPresent){
+       //ajouter celui ci dans la HashTable
+       patientFast.put(num, nom);
+           
+       //creer l'hyperlink
+       Hyperlink tmp=new Hyperlink(num+"-"+nom);
+       
        liens.add(tmp); //ajouter l'hyperlink à l'arrayList
+       
        vbPatients.getChildren().add(tmp); //ajouter l'hyperlink à la Vbox
+       
        liens.stream().forEach((hyperlink) -> { //et creer le lien vers ce patient
            hyperlink.setOnAction((ActionEvent t) -> {
                //récuperer le numéro du patient...
@@ -95,7 +118,8 @@ public class FXMLController implements Initializable {
                //afficher les données sur le bandeau patient...
                charge_et_affiche_patient(hyperlink.getText().substring(0,hyperlink.getText().indexOf('-')));
            });
-        });     
+        }); 
+       } //fin ajout dans liste latérale
     }
     
     
@@ -144,7 +168,7 @@ public class FXMLController implements Initializable {
     public void fermer_panel_sans_action(){
         paneCentral.getChildren().remove(0);
         //débloquer les menu
-        MenuPatients.setDisable(false);
+        init_menu();
     }
 
     
@@ -156,9 +180,32 @@ public class FXMLController implements Initializable {
     public void fermer_panel_getID(){
         paneCentral.getChildren().remove(0);
         //débloquer les menu
-        MenuPatients.setDisable(false);
+        menuStatut.replace(MenuPatients, Boolean.FALSE);
+        init_menu();
         //charger et afficher le patient sélectionné...
         charge_et_affiche_patient(ctrlRP.getReponse());
+        ajouter_Patients_Rapide(patientCourant.getNOM()+" "+patientCourant.getPRENOM(),patientCourant.getID());
+    }
+    
+    
+    /**
+     * Initialise le menu dans le dernier état sauvegardé.
+     * ou modifié aprés une action particuliére
+     */
+    private void init_menu()
+    {
+        for (Map.Entry<TitledPane, Boolean> entry : menuStatut.entrySet()) {
+            Boolean value = entry.getValue();
+            TitledPane key = entry.getKey();
+            if (value==Boolean.TRUE)
+            {
+                key.setDisable(true);
+            }
+            else
+            {
+                key.setDisable(false);
+            }  
+        }
     }
     
     
@@ -166,6 +213,17 @@ public class FXMLController implements Initializable {
      * Initialise les composant du Stage principal au démarrage
      */
     private void init_components() {
+        
+        //etat des menu...
+        menuStatut=new HashMap<>();
+        menuStatut.put(MenuPatients, Boolean.FALSE);
+        menuStatut.put(MenuVisites, Boolean.TRUE);
+        menuStatut.put(MenuBilanVital, Boolean.TRUE);
+        menuStatut.put(MenuQuitter, Boolean.FALSE);
+        
+        //init_menu
+        init_menu();
+        
         //ouvrir par défaut le menu patient au démarrage...
         MenuPatients.setExpanded(true);
         lbADRESSE1PATIENT.setText(VIDE);
@@ -176,12 +234,12 @@ public class FXMLController implements Initializable {
         lbNOMPATIENT.setText(VIDE);
         lbPROFESSIONPATIENT.setText(VIDE);
         lbTELEMAILPATIENT.setText(VIDE);
-        //creer un objet patient courant
+        
+        //creer un objet patient courant vide pour l'instant
         patientCourant=new PatientBean();
         
-        //ajout d'un patient fitif 
-        //DELETE
-        addHLPatients("Tondeur Hervé", "1");
+        //Préparation de la liste d'accés rapide des patients 
+        patientFast=new HashMap<>();
     }
 
     
@@ -254,8 +312,14 @@ public class FXMLController implements Initializable {
 
     
     @FXML
-    private void hMnNouveauPatient(ActionEvent event) {
-     //TODO   
+    private void hMnNouveauPatient(ActionEvent event) throws Exception {
+      //inserer la recherche patient
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NouveauPatFXML.fxml"));
+       paneCentral.getChildren().add((Node)loader.load());
+       ctrlNP = loader.getController();
+       ctrlNP.setCaller(this, db);
+       //masquer les menus actifs uniquement sauf Quitter!
+       MenuPatients.setDisable(true);   
     }
 
     @FXML
@@ -271,19 +335,29 @@ public class FXMLController implements Initializable {
      */
     @FXML
     private void hMnFermerPatient(ActionEvent event) {
-      patientCourant.clear(); //met -1 sur ID patient
-      //effacer les informations du bandeau patient
-      lbADRESSE1PATIENT.setText(""); //effacer tous les champs du bandeau patient
-      lbADRESSE2PATIENT.setText("");
-      lbDATECREATION.setText("");
-      lbDDNPATIENT.setText("");
-      lbIDPATIENT.setText("");
-      lbNOMPATIENT.setText("");
-      lbPROFESSIONPATIENT.setText("");
-      lbTELEMAILPATIENT.setText("");
-      MenuVisites.setDisable(true); // réinitialiser les menus
-      MenuBilanVital.setDisable(true);
-      MenuPatients.setDisable(false);
+        if (patientCourant.getID().compareTo("-1")!=0)
+            {
+            Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(monStage.getTitle());
+            alert.setContentText("Etes vous sur de vouloir fermer\n le patient en cours ?");
+            Optional<ButtonType> reponse= alert.showAndWait();
+            if (reponse.get()==ButtonType.OK)
+            {
+                patientCourant.clear(); //met -1 sur ID patient
+                //effacer les informations du bandeau patient
+                lbADRESSE1PATIENT.setText(""); //effacer tous les champs du bandeau patient
+                lbADRESSE2PATIENT.setText("");
+                lbDATECREATION.setText("");
+                lbDDNPATIENT.setText("");
+                lbIDPATIENT.setText("");
+                lbNOMPATIENT.setText("");
+                lbPROFESSIONPATIENT.setText("");
+                lbTELEMAILPATIENT.setText("");
+                MenuVisites.setDisable(true); // réinitialiser les menus
+                MenuBilanVital.setDisable(true);
+                MenuPatients.setDisable(false);
+            }
+          }
     }
     
 }
