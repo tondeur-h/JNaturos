@@ -28,9 +28,11 @@ public class FXMLController implements Initializable {
     Stage monStage; //stage de la fenêtre principale
     Database db; //objet base de données
     List<Hyperlink> liens= new ArrayList<>(); //liste des patients récents...
-    Patient patientCourant=null;
+    PatientBean patientCourant=null;
     String visiteCourante="-1";
     
+    //controleur des dialogues
+    RecherchePatFXMLController ctrlRP=null; //controleur dialogue recherche patient
     
     //constantes
     final String VIDE="";
@@ -129,14 +131,37 @@ public class FXMLController implements Initializable {
        //inserer la recherche patient
        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RecherchePatFXML.fxml"));
        paneCentral.getChildren().add((Node)loader.load());
-       final RecherchePatFXMLController ctrlRP = loader.getController();
-       ctrlRP.getCaller(this, db);
+       ctrlRP = loader.getController();
+       ctrlRP.setCaller(this, db);
        //masquer les menus actifs uniquement sauf Quitter!
-       MenuPatients.setDisable(true);
-       
+       MenuPatients.setDisable(true); 
     }
 
- 
+    /**
+     * Fermer le panneau courant 
+     * toujours le numero 0 normalement
+     */
+    public void fermer_panel_sans_action(){
+        paneCentral.getChildren().remove(0);
+        //débloquer les menu
+        MenuPatients.setDisable(false);
+    }
+
+    
+    /**
+     * Fermer le panneau courant 
+     * toujours le numero 0 normalement
+     * et récuperer le numero ID du patient
+     */
+    public void fermer_panel_getID(){
+        paneCentral.getChildren().remove(0);
+        //débloquer les menu
+        MenuPatients.setDisable(false);
+        //charger et afficher le patient sélectionné...
+        charge_et_affiche_patient(ctrlRP.getReponse());
+    }
+    
+    
     /**
      * Initialise les composant du Stage principal au démarrage
      */
@@ -152,7 +177,7 @@ public class FXMLController implements Initializable {
         lbPROFESSIONPATIENT.setText(VIDE);
         lbTELEMAILPATIENT.setText(VIDE);
         //creer un objet patient courant
-        patientCourant=new Patient();
+        patientCourant=new PatientBean();
         
         //ajout d'un patient fitif 
         //DELETE
@@ -169,11 +194,11 @@ public class FXMLController implements Initializable {
             System.out.println("select * from patient where id="+numero.trim());
             db.query("select * from patient where id="+numero.trim());
             while (db.getDB().next()){
-                patientCourant.setID(db.getDB().getInt("ID"));
+                patientCourant.setID(""+db.getDB().getInt("ID"));
                 patientCourant.setNOM(db.getDB().getString("NOM"));
                 patientCourant.setNOMMAR(db.getDB().getString("NOMMAR"));
                 patientCourant.setPRENOM(db.getDB().getString("PRENOM"));
-                patientCourant.setDDN(db.getDB().getDate("DDN"));
+                patientCourant.setDDN(db.getDB().getDate("DDN").toString());
                 patientCourant.setSEXE(db.getDB().getString("SEXE"));
                 patientCourant.setNATIONALITE(db.getDB().getString("NATIONALITE"));
                 patientCourant.setADRESSE1(db.getDB().getString("ADRESSE1"));
@@ -188,8 +213,8 @@ public class FXMLController implements Initializable {
                 patientCourant.setNOMCAISSE(db.getDB().getString("NOMCAISSE"));
                 patientCourant.setPROFESSION(db.getDB().getString("PROFESSION"));
                 patientCourant.setCOMMENTAIRES(db.getDB().getString("COMMENTAIRES"));
-                patientCourant.setDATECREATION(db.getDB().getTimestamp("DATECREATION"));
-                patientCourant.setREPERTOIRE(db.getDB().getInt("REPERTOIRE"));
+                patientCourant.setDATECREATION(db.getDB().getTimestamp("DATECREATION").toString());
+                patientCourant.setREPERTOIRE(""+db.getDB().getInt("REPERTOIRE"));
             } 
             
             lbIDPATIENT.setText(""+patientCourant.getID());
@@ -197,8 +222,8 @@ public class FXMLController implements Initializable {
             lbPROFESSIONPATIENT.setText(patientCourant.getPROFESSION());
             lbADRESSE1PATIENT.setText(patientCourant.getADRESSE1()+" "+patientCourant.getCP()+" "+patientCourant.getVILLE());
             lbADRESSE2PATIENT.setText(patientCourant.getADRESSE2());
-            lbDATECREATION.setText(patientCourant.getDATECREATION().toString());
-            lbDDNPATIENT.setText(patientCourant.getDDN().toString());
+            lbDATECREATION.setText(patientCourant.getDATECREATION());
+            lbDDNPATIENT.setText(patientCourant.getDDN());
             lbTELEMAILPATIENT.setText(patientCourant.getTEL1()+"/"+patientCourant.getEMAIL1());
             
         } catch (SQLException ex) {
@@ -238,17 +263,6 @@ public class FXMLController implements Initializable {
         //TODO
     }
     
-      
-    /**
-     * Fermer le panneau courant 
-     * toujours le numero 0 normalement
-     */
-    public void fermer_panel(){
-        paneCentral.getChildren().remove(0);
-        //débloquer les menu
-        MenuPatients.setDisable(false);
-    }
-
     
     /**
      * Fermer le patient en cours
@@ -258,6 +272,7 @@ public class FXMLController implements Initializable {
     @FXML
     private void hMnFermerPatient(ActionEvent event) {
       patientCourant.clear(); //met -1 sur ID patient
+      //effacer les informations du bandeau patient
       lbADRESSE1PATIENT.setText(""); //effacer tous les champs du bandeau patient
       lbADRESSE2PATIENT.setText("");
       lbDATECREATION.setText("");

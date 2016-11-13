@@ -17,7 +17,7 @@
    <children>
       <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="383.0" prefWidth="580.0" text="Rechercher un patient" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" visible="false">
                <children>
                   <Button fx:id="btnFermer" layoutX="494.0" layoutY="333.0" mnemonicParsing="false" onAction="#hBtnFermer" prefHeight="17.0" prefWidth="90.0" text="Fermer" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                   <Label layoutX="22.4" layoutY="22.4" prefHeight="16.0" prefWidth="146.0" text="Date de Naissance :" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0" />

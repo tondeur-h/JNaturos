@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import static javafx.application.Application.launch;
 
 
 public class MainApp extends Application {
@@ -27,7 +28,10 @@ public class MainApp extends Application {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainScene.fxml"));
         Parent root = (Parent)loader.load();
+        //final FXMLController controller = loader.getController();
         final FXMLController controller = loader.getController();
+        
+        
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
