@@ -10,12 +10,12 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.htdev.jnaturos.NouveauPatFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.htdev.jnaturos.ModifierPatFXMLController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
    <children>
-      <TitledPane animated="false" layoutX="14.0" text="Nouveau Patient" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TitledPane animated="false" layoutX="14.0" text="Modifier Patient" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -58,7 +58,7 @@
                   <TextArea fx:id="tfCOMMENTAIRES" layoutX="152.0" layoutY="373.0" prefHeight="143.0" prefWidth="608.0" />
                   <Label layoutX="528.0" layoutY="73.0" text="CLASSEMENT :" />
                   <Button fx:id="btnAnnuler" cancelButton="true" mnemonicParsing="false" onAction="#hBtnAnnuler" text="Annuler" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#hBtnEnregistrer" text="Enregistrer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                  <Button fx:id="btnModifier" mnemonicParsing="false" onAction="#hBtnModifier" text="Modifier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
 
                </children>
             </AnchorPane>

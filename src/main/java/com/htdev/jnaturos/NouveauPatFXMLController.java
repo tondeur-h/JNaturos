@@ -7,6 +7,7 @@ package com.htdev.jnaturos;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -28,9 +30,11 @@ import javafx.scene.control.TextField;
 public class NouveauPatFXMLController implements Initializable {
 
      //paramétres du controleur principal
-    FXMLController fx;
-    Database db;
-    private String reponse=null;
+    FXMLController fx; //controlleur parent
+    Database db; //objet database ouvert
+    
+    private String reponse=null; 
+    
     @FXML
     private Button btnAnnuler;
     @FXML
@@ -66,12 +70,18 @@ public class NouveauPatFXMLController implements Initializable {
     @FXML
     private TextArea tfCOMMENTAIRES;
     @FXML
-    private ComboBox<RepertoireBean> cmREPERTOIRE;
+    private ComboBox<RepertoireBean> cbREPERTOIRE;
     
     //ol pour les combobox...
     ObservableList<String> olSEXE=javafx.collections.FXCollections.observableArrayList();
     ObservableList<RepertoireBean> olREPERTOIRE=javafx.collections.FXCollections.observableArrayList();
     ObservableList<String> olNATIONALITE=javafx.collections.FXCollections.observableArrayList();
+    @FXML
+    private TextField tfADRESSE2;
+    @FXML
+    private TextField tfTEL1;
+    @FXML
+    private TextField tfTEL2;
     
      /**
      * récupérer les infos du controlleur appelant
@@ -88,13 +98,15 @@ public class NouveauPatFXMLController implements Initializable {
             //sexe
             olSEXE.addAll("F","M","I");
             cbSEXE.setItems(olSEXE);
+            cbSEXE.getSelectionModel().selectFirst();
             
             //REPERTOIRE
             db.query("select ID, LABEL FROM REPERTOIRE order by ID");
             while (db.getDB().next()){
                 olREPERTOIRE.add(new RepertoireBean(db.getDB().getString("LABEL"), db.getDB().getInt("ID")));
             }
-            cmREPERTOIRE.setItems(olREPERTOIRE);
+            cbREPERTOIRE.setItems(olREPERTOIRE);
+            cbREPERTOIRE.getSelectionModel().selectFirst();
             db.closeResultSet();
             db.closeStatement();
             
@@ -105,6 +117,7 @@ public class NouveauPatFXMLController implements Initializable {
             //NATIONALITE
             olNATIONALITE.addAll("FRA","SUI","ANG","ESP","ALL","ITA","POR","AUT");
             cbNATIONALITE.setItems(olNATIONALITE);
+            cbNATIONALITE.getSelectionModel().selectFirst();
     }
     
      /**
@@ -132,11 +145,36 @@ public class NouveauPatFXMLController implements Initializable {
 
     @FXML
     private void hBtnEnregistrer(ActionEvent event) {
-    //enregistrer en base...
-    //controler le bon déroulement
-    
-    //fermer cette fenêtre
-    fx.fermer_panel_sans_action();
+        try {
+            //enregistrer en base...
+            //controler presence du NOM et PRENOM
+            if (tfNOM.getText().isEmpty() || tfPRENOM.getText().isEmpty() || dtDDN.getEditor().getText().isEmpty()){
+                //ne pas continuer car NOM et PRENOM et DDN obligatoires
+                Alert alert=new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Nouveau Patient - NOM/PRENOM/DDN");
+                alert.setContentText("Il manque le NOM ou le PRENOM ou la DDN du patient\nCeux ci sont obligatoires...");
+                alert.showAndWait();
+                return; //sortir sans rien faire...
+            }
+            //convertir le format de la date...
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+           String DDN=dtDDN.getValue().format(formatter);
+           
+            
+            //construire la requete d'insertion du nouveau patient
+            String requeteInsertPatient="INSERT INTO PATIENT VALUES(DEFAULT,'"+tfNOM.getText()+"','"+tfPRENOM.getText()+"','"+tfNOMMAR.getText()+"','"+DDN+"','"+cbSEXE.getValue()+"','"+cbNATIONALITE.getValue()+"','"+tfADRESSE1.getText()+"','"+tfADRESSE2.getText()+"','"+tfCP.getText()+"','"+tfVILLE.getText()+"','"+tfTEL1.getText()+"','"+tfTEL2.getText()+"','"+tfEMAIL1.getText()+"','"+tfTEL2.getText()+"','"+tfNUMSS.getText()+"','"+tfNOMCAISSE.getText()+"','"+tfPROFESSION.getText()+"','"+tfCOMMENTAIRES.getText()+"',CURRENT_TIMESTAMP,"+cbREPERTOIRE.getSelectionModel().getSelectedItem().getNumREPERTOIRE()+")";
+ 
+            db.insert(requeteInsertPatient);
+            //recuperer son numero de patient pour transmettre au controleur parent.
+            db.query("SELECT MAX(IDENTITY_VAL_LOCAL()) FROM PATIENT");
+            db.getDB().next();
+            reponse=db.getDB().getString(1);
+            
+            //fermer cette fenêtre
+            fx.fermer_panel_getIDNP();
+        } catch (SQLException ex) {
+            Logger.getLogger(NouveauPatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

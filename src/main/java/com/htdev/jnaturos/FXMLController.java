@@ -187,6 +187,21 @@ public class FXMLController implements Initializable {
         ajouter_Patients_Rapide(patientCourant.getNOM()+" "+patientCourant.getPRENOM(),patientCourant.getID());
     }
     
+    /**
+     * Fermer le panneau courant 
+     * toujours le numero 0 normalement
+     * et récuperer le numero ID du patient
+     */
+    public void fermer_panel_getIDNP(){
+        paneCentral.getChildren().remove(0);
+        //débloquer les menu
+        menuStatut.replace(MenuPatients, Boolean.FALSE);
+        init_menu();
+        //charger et afficher le patient sélectionné...
+        charge_et_affiche_patient(ctrlNP.getReponse());
+        ajouter_Patients_Rapide(patientCourant.getNOM()+" "+patientCourant.getPRENOM(),patientCourant.getID());
+    }
+    
     
     /**
      * Initialise le menu dans le dernier état sauvegardé.
