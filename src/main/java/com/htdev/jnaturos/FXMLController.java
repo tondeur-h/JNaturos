@@ -1,5 +1,6 @@
 package com.htdev.jnaturos;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class FXMLController implements Initializable {
     //controleur des dialogues
     RecherchePatFXMLController ctrlRP=null; //controleur dialogue recherche patient
     NouveauPatFXMLController ctrlNP=null; //controleur dialogue nouveau patient
-    
+    ModifierPatFXMLController ctrlMP=null; //controlleur dialogue modifier patient
     
     //constantes
     final String VIDE="";
@@ -202,6 +203,20 @@ public class FXMLController implements Initializable {
         ajouter_Patients_Rapide(patientCourant.getNOM()+" "+patientCourant.getPRENOM(),patientCourant.getID());
     }
     
+     /**
+     * Fermer le panneau courant 
+     * toujours le numero 0 normalement
+     * et récuperer le numero ID du patient
+     */
+    public void fermer_panel_getIDMP(){
+        paneCentral.getChildren().remove(0);
+        //débloquer les menu
+        menuStatut.replace(MenuPatients, Boolean.FALSE);
+        init_menu();
+        //charger et afficher le patient sélectionné...
+        charge_et_affiche_patient(ctrlMP.getReponse());
+        ajouter_Patients_Rapide(patientCourant.getNOM()+" "+patientCourant.getPRENOM(),patientCourant.getID());
+    }
     
     /**
      * Initialise le menu dans le dernier état sauvegardé.
@@ -337,9 +352,22 @@ public class FXMLController implements Initializable {
        MenuPatients.setDisable(true);   
     }
 
+    /**
+     * appel du diaogue de modification d'un patient
+     * celui en cours pour l'instant
+     * on va passer pour cela le numero d'ID du patient
+     * @param event
+     * @throws IOException 
+     */
     @FXML
-    private void hMnModifierPatient(ActionEvent event) {
-        //TODO
+    private void hMnModifierPatient(ActionEvent event) throws IOException {
+         //inserer la recherche patient
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ModifierPatFXML.fxml"));
+       paneCentral.getChildren().add((Node)loader.load());
+       ctrlMP = loader.getController();
+       ctrlMP.setCaller(this, db,patientCourant);
+       //masquer les menus actifs uniquement sauf Quitter!
+       MenuPatients.setDisable(true); 
     }
     
     
