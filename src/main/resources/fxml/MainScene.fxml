@@ -57,11 +57,12 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </TitledPane>
-            <TitledPane fx:id="MenuQuitter" expanded="false" text="Quitter">
+            <TitledPane fx:id="MenuQuitter" expanded="false" text="JNaturos">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Hyperlink fx:id="mnQuitter" alignment="CENTER" layoutY="2.0" onAction="#hMnQuitter" prefHeight="24.0" prefWidth="210.0" text="Quitter" underline="true" />
+                        <Hyperlink fx:id="mnConfiguration" alignment="CENTER" layoutX="-2.0" layoutY="26.0" onAction="#hmnConfiguration" prefHeight="24.0" prefWidth="202.0" text="Configuration" underline="true" />
                      </children>
                   </AnchorPane>
               </content>
@@ -71,7 +72,7 @@
             <DropShadow />
          </effect>
       </Accordion>
-      <ImageView fitHeight="682.0" fitWidth="1038.0" layoutX="200.693603515625" layoutY="84.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="52.0615234375">
+      <ImageView fx:id="imgCentrale" fitHeight="682.0" fitWidth="1038.0" layoutX="200.693603515625" layoutY="84.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="34.0" AnchorPane.rightAnchor="52.0615234375">
          <image>
             <Image url="@../img/Naturopathie.jpg" />
          </image>
